@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog</title>
+  <style>
+    /* CSS for styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    main {
+      padding: 1rem;
+    }
+
+    article {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    h1,
+    h2 {
+      margin-top: 0;
+    }
+
+    .meta {
+      font-style: italic;
+      color: #666;
+    }
+
+    .travel-log {
+      background-color: #f9f9f9;
+      padding: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .comment {
+      background-color: #e3e3e3;
+      padding: 1rem;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+
+    .comment h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .comment p {
+      margin: 0;
+      font-weight: bold;
+      color: black;
+    }
+
+    #commentForm {
+      background-color: #f9f9f9;
+      padding: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-top: 2rem;
+    }
+
+    #commentForm label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: black;
+    }
+
+    #commentForm input[type="text"],
+    #commentForm textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    #commentForm button {
+      padding: 0.5rem 1rem;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    #commentForm button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>My Blog</h1>
+  </header>
+
+  <main>
+    <article>
+      <header>
+        <h2>Understanding Convolutional Neural Networks</h2>
+        <p class="meta">Published on February 28, 2024</p>
+      </header>
+      <img src="cnn.png" alt="Convolutional Neural Network">
+      <p>Convolutional Neural Networks (CNNs) are a class of deep neural networks, most commonly applied to analyzing
+        visual imagery.</p>
+      <p>CNNs have revolutionized the field of computer vision, achieving state-of-the-art results in various tasks such
+        as image classification, object detection, and image segmentation.</p>
+      <p>They are composed of multiple layers, including convolutional layers, pooling layers, and fully connected
+        layers, each designed to extract and process features from the input image.</p>
+      <p>Understanding the architecture and workings of CNNs is crucial for anyone working in the field of computer
+        vision or interested in deep learning.</p>
+      <p>This blog will explore the fundamentals of CNNs, their applications, and recent advancements in the field.</p>
+    </article>
+
+    <article>
+      <header>
+        <h2>The Evolution of Convolutional Neural Networks</h2>
+        <p class="meta">Published on March 15, 2024</p>
+      </header>
+      <p>Since their inception, convolutional neural networks (CNNs) have undergone significant evolution and
+        refinement.</p>
+      <p>Early CNN architectures like LeNet laid the groundwork for subsequent developments, paving the way for deeper
+        and more complex networks such as AlexNet, VGG, and ResNet.</p>
+      <p>Recent trends in CNN research include the exploration of attention mechanisms, network pruning techniques, and
+        the integration of CNNs with other deep learning architectures like transformers.</p>
+      <p>The continuous evolution of CNNs promises to unlock new capabilities in computer vision and drive innovation in
+        a wide range of fields.</p>
+    </article>
+
+    <article>
+      <header>
+        <h2>Challenges and Future Directions in Convolutional Neural Networks</h2>
+        <p class="meta">Published on April 10, 2024</p>
+      </header>
+      <p>While convolutional neural networks (CNNs) have achieved remarkable success, they still face several
+        challenges.</p>
+      <p>Issues such as overfitting, interpretability, and the need for large labeled datasets remain significant
+        obstacles in the deployment of CNN models.</p>
+      <p>Future research directions include the development of more robust regularization techniques, explainable AI
+        methods for interpreting CNN decisions, and the exploration of self-supervised and unsupervised learning
+        approaches.</p>
+      <p>Addressing these challenges will be crucial for realizing the full potential of CNNs and advancing the field of
+        deep learning.</p>
+    </article>
+  </main>
+
+  <footer>
+    <div class="travel-log">
+      <h2 style="color: black;">Comments</h2>
+      <div class="comment">
+        <h3 style="color: black;">John Doe</h3>
+        <p><em>February 29, 2024</em></p>
+        <p>Hi there! Just checking out this awesome blog about convolutional neural networks.</p>
+      </div>
+      <div class="comment">
+        <h3 style="color: black;">Jane Smith</h3>
+        <p><em>March 5, 2024</em></p>
+        <p>Great job on the articles! Really informative and well-written.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

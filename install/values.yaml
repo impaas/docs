@@ -1,0 +1,208 @@
+# ImPaaS values for tsuru-stack.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+tsuru-api:
+  nameOverride: api
+
+  service:
+    type: LoadBalancer
+    httpsOnly: false
+    httpPort: 80
+    targetHTTPPort: 8080
+    httpsPort: 443
+    targetHTTPSPort: 8443
+
+  ingress:
+    enabled: true
+    ingressClassName: webapprouting.kubernetes.azure.com
+    hosts:
+      - host: impaas.uk
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+      - hosts:
+        - impaas.uk
+        secretName: tsuru-api-tls
+
+  certManager:
+    enabled: true
+    issuerRef:
+      group: cert-manager.io
+      kind: Issuer
+      name: letsencrypt-prod
+    dnsNames:
+      - impaas.uk
+
+  indexPageTemplate: "<html><head></head><body><h1>Hello!</h1></body></html>"
+
+  tsuruConfig:
+    host: "https://impaas.uk"
+    useTLS: "true"
+
+    database:
+      mongodbURL: "mongodb://tsuru:tsuru@tsuru-mongodb/tsuru"
+
+    auth:
+      scheme: "oauth"
+      user-registration: "true"
+      oauth:
+        clientID: "a8e6877c-314a-462d-94f6-5e73d80bb153"
+        clientSecret: "${{ secrets.OAUTH_CLIENT_SECRET }}"
+        scope: "openid"
+        authURL: "https://login.microsoftonline.com/2b897507-ee8c-4575-830b-4f8267c3d307/oauth2/v2.0/authorize"
+        tokenURL: "https://login.microsoftonline.com/2b897507-ee8c-4575-830b-4f8267c3d307/oauth2/v2.0/token"
+        infoURL: "https://graph.microsoft.com/v1.0/me"
+        callbackPort: 38080
+
+    queue:
+      mongodbURL: "mongodb://tsuru:tsuru@tsuru-mongodb/tsuru"
+
+    provisioner: "kubernetes"
+
+    clusters:
+      defaults:
+        build-service-address: "dns:///tsuru-deploy-agent:80"
+        registry-insecure: "false"
+        registry: "tsururegistry.azurecr.io"
+        build-service-tls: "false"
+        disable-default-node-selector: "true"
+        job-event-creation: "false"
+
+    docker:
+      registry: tsururegistry.azurecr.io:443
+      resolve-registry-name: false
+      gc:
+        dry-run: false
+      router: ingress-router
+      cluster:
+        storage: mongodb
+        mongo-url: "mongodb://tsuru:tsuru@tsuru-mongodb/tsuru"
+        mongo-database: tsuru
+
+    routers:
+      ingress-router:
+        type: api
+        api-url: http://tsuru-kubernetes-router/api/ingress-nginx
+        headers:
+          Authorization: "Basic YWRtaW46bXlwYXNzd29yZA=="
+
+    volumePlans:
+      azurefile:
+        kubernetes:
+          storage-class: azurefile
+
+    log:
+      disableSyslog: true
+
+    debug: true
+
+kubernetes-router:
+  service:
+    type: ClusterIP
+  controllerModes:
+    - ingress-nginx
+  ingressExpose:
+    domain: impaas.uk
+    port: 443
+  arguments:
+    - "-ingress-class"
+    - "webapprouting.kubernetes.azure.com"
+
+  api:
+    username: "admin"
+    password: "mypassword"
+
+mongodb:
+  enabled: true
+  image:
+    repository: mongo
+    tag: 4.4.24
+  extraEnvVars:
+    - name: MONGO_INITDB_ROOT_USERNAME
+      value: "root"
+    - name: MONGO_INITDB_ROOT_PASSWORD
+      value: "tsuru"
+    - name: MONGO_INITDB_DATABASE
+      value: "tsuru"
+  auth:
+    rootPassword: tsuru
+    rootUser: root
+    usernames:
+      - tsuru
+    passwords:
+      - tsuru
+    databases:
+      - tsuru
+  livenessProbe:
+    enabled: false
+  readinessProbe:
+    enabled: false
+  persistence:
+    mountPath: "/data/db"
+  initdbScripts:
+    init_tsuru_script.js: |
+      db.createUser(
+        {
+            user: "tsuru",
+            pwd: "tsuru",
+            roles: [
+                {
+                    role: "readWrite",
+                    db: "tsuru"
+                }
+            ]
+        }
+      );
+
+deploy-agent:
+  buildkit:
+    config: |
+      # Buildkitd config file
+      # https://github.com/moby/buildkit/blob/master/docs/buildkitd.toml.md
+
+      [grpc]
+        address = [
+          "tcp://0.0.0.0:8081",
+          "unix:///run/buildkit/buildkitd.sock",
+        ]
+
+      [worker.containerd]
+        enabled = false
+
+      [worker.oci]
+        enabled = true
+        gc = false
+
+        # NOTE: Force x86_64 arch as Tsuru doesn't support different ones yet.
+        platforms = [
+          "linux/amd64"
+        ]
+
+      [registry."tsururegistry.azurecr.io"]
+        insecure = false
+
+      # vim: ft=toml
+  dockerConfigName: tsuru-deploy-agent-docker-config
+  deployAgent:
+    dockerConfig: |
+      {
+        "auths": {
+          "tsururegistry.azurecr.io": {
+            "auth": "${{ secrets.REGISTRY_AUTH }}"
+          }
+        }
+      }
+
+monitoring:
+  enabled: false
+
+ingress-nginx:
+  enabled: false
+
+certManager:
+  enabled: false
+
+registry:
+  enabled: false

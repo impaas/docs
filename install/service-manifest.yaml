@@ -1,0 +1,7 @@
+id: mysql
+description: MySQL database service
+team: demo
+username: mysqlrootuser
+password: ${{ secrets.MYSQL_SERVICE_PASSWORD }}
+endpoint:
+  production: 20.117.188.21:4999

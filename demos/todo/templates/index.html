@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-5">Todo List</h1>
+        <form method="POST" class="mt-5">
+            <div class="form-group">
+                <input type="text" name="task" class="form-control" placeholder="New task" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Task</button>
+        </form>
+        <ul class="list-group mt-5">
+            {% for task in tasks %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <form method="POST" action="/complete/{{ task.id }}" class="d-inline">
+                            {% if task.complete %}
+                                <button type="submit" class="btn btn-link p-0"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>
+                                <s class="task-text" data-id="{{ task.id }}">{{ task.task }}</s>
+                            {% else %}
+                                <button type="submit" class="btn btn-link p-0"><i class="fa fa-square-o" aria-hidden="true"></i></button>
+                                <span class="task-text" data-id="{{ task.id }}">{{ task.task }}</span>
+                            {% endif %}
+                        </form>
+                    </div>
+                    <form method="POST" action="/delete/{{ task.id }}" class="d-inline">
+                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script>
+        $(".task-text").click(function() {
+            $(this).attr('contenteditable', 'true').focus();
+        });
+
+        $(".task-text").blur(function() {
+            $(this).attr('contenteditable', 'false');
+            var id = $(this).data('id');
+            var task = $(this).text();
+
+            $.ajax({
+                type: "POST",
+                url: "/edit/" + id,
+                data: { task: task },
+                success: function(response) {
+                    location.reload();
+                },
+                error: function(response) {
+                    alert('There was an issue updating your task');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
