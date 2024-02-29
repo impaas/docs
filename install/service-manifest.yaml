@@ -1,7 +1,7 @@
 id: mysql
 description: MySQL database service
 team: demo
-username: mysqlrootuser
-password: ${{ secrets.MYSQL_SERVICE_PASSWORD }}
+username: ${MYSQL_SERVICE_USERNAME}
+password: ${MYSQL_SERVICE_PASSWORD}
 endpoint:
-  production: 20.117.188.21:4999
+  production: ${MYSQL_SERVICE_HOST}:${MYSQL_SERVICE_PORT}

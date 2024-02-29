@@ -17,13 +17,13 @@ tsuru-api:
     enabled: true
     ingressClassName: webapprouting.kubernetes.azure.com
     hosts:
-      - host: impaas.uk
+      - host: ${YOUR_DOMAIN}
         paths:
           - path: /
             pathType: ImplementationSpecific
     tls:
       - hosts:
-        - impaas.uk
+        - ${YOUR_DOMAIN}
         secretName: tsuru-api-tls
 
   certManager:
@@ -33,12 +33,12 @@ tsuru-api:
       kind: Issuer
       name: letsencrypt-prod
     dnsNames:
-      - impaas.uk
+      - ${YOUR_DOMAIN}
 
   indexPageTemplate: "<html><head></head><body><h1>Hello!</h1></body></html>"
 
   tsuruConfig:
-    host: "https://impaas.uk"
+    host: "https://${YOUR_DOMAIN}"
     useTLS: "true"
 
     database:
@@ -48,11 +48,11 @@ tsuru-api:
       scheme: "oauth"
       user-registration: "true"
       oauth:
-        clientID: "a8e6877c-314a-462d-94f6-5e73d80bb153"
-        clientSecret: "${{ secrets.OAUTH_CLIENT_SECRET }}"
+        clientID: "${ENTRA_CLIENT_ID}"
+        clientSecret: "${ENTRA_CLIENT_SECRET}"
         scope: "openid"
-        authURL: "https://login.microsoftonline.com/2b897507-ee8c-4575-830b-4f8267c3d307/oauth2/v2.0/authorize"
-        tokenURL: "https://login.microsoftonline.com/2b897507-ee8c-4575-830b-4f8267c3d307/oauth2/v2.0/token"
+        authURL: "https://login.microsoftonline.com/${SUBSCRIPTION_ID}/oauth2/v2.0/authorize"
+        tokenURL: "https://login.microsoftonline.com/${SUBSCRIPTION_ID}/oauth2/v2.0/token"
         infoURL: "https://graph.microsoft.com/v1.0/me"
         callbackPort: 38080
 
@@ -65,13 +65,13 @@ tsuru-api:
       defaults:
         build-service-address: "dns:///tsuru-deploy-agent:80"
         registry-insecure: "false"
-        registry: "tsururegistry.azurecr.io"
+        registry: "${REGISTRY_URL}"
         build-service-tls: "false"
         disable-default-node-selector: "true"
         job-event-creation: "false"
 
     docker:
-      registry: tsururegistry.azurecr.io:443
+      registry: ${REGISTRY_URL}:443
       resolve-registry-name: false
       gc:
         dry-run: false
@@ -104,7 +104,7 @@ kubernetes-router:
   controllerModes:
     - ingress-nginx
   ingressExpose:
-    domain: impaas.uk
+    domain: ${YOUR_DOMAIN}
     port: 443
   arguments:
     - "-ingress-class"
@@ -180,7 +180,7 @@ deploy-agent:
           "linux/amd64"
         ]
 
-      [registry."tsururegistry.azurecr.io"]
+      [registry."${REGISTRY_URL}"]
         insecure = false
 
       # vim: ft=toml
@@ -190,7 +190,7 @@ deploy-agent:
       {
         "auths": {
           "tsururegistry.azurecr.io": {
-            "auth": "${{ secrets.REGISTRY_AUTH }}"
+            "auth": "${REGISTRY_AUTH_TOKEN}"
           }
         }
       }
