@@ -36,6 +36,8 @@ helm install \
 Next, install the ImPaaS fork of Tsuru on the cluster using Helm.
 
 ```sh
+helm repo add impaas https://impaas.github.io/charts
+helm repo update
 helm install tsuru impaas/tsuru-stack -n tsuru-system --create-namespace -f values.yaml
 kubectl create -n tsuru-system -f letsencrypt-prod.yaml
 kubectl exec -it -n tsuru-system deploy/tsuru-api -- tsurud root user create abc123@ic.ac.uk
