@@ -31,7 +31,8 @@ impaas user info
 
 Users can be members of multiple teams and have different permissions in each.
 
-# Static Site
+# Demonstrations
+## Static Site
 Let's warm up by sharing a simple static blog with the public.
 One could equally use GitHub Pages for this, which is free (for now).
 
@@ -55,7 +56,7 @@ Lo, and behold, going to [blog.impaas.uk](https://blog.impaas.uk) has my blog fa
 
 `popd`
 
-# Dynamic Web App
+## Dynamic Web App
 Hosting dynamic web apps for free is where the Impaas value proposition shines. There are endless alternative ways to host, but most others require more hassle (such as setting up a cloud VM as a web server) or money (like Heroku, which got rid of their free tier).
 
 `pushd greet`
@@ -74,8 +75,7 @@ Now let's visit [greet.impaas.uk](https://greet.impaas.uk) - works!
 
 `popd`
 
-# CI
-
+## CI Deployments
 `pushd greet-ci`
 
 Let's say I now have this app on GitHub and I'm following good software practices by using a CI pipeline to run my tests. But I don't want to have to manually deploy to Impaas each time I make a change.
@@ -101,8 +101,8 @@ Let's make a dummy commit to our app and watch it deploy for us!
 
 `popd`
 
-# Docker
-
+## Container Deployments
+### Using a Dockerfile
 `pushd counter`
 
 So far, we've seen two 'platforms' - static and python.
@@ -132,6 +132,7 @@ impaas app deploy -a counter --dockerfile .
 
 And we can see [counter.impaas.uk](https://counter.impaas.uk) is up and running!
 
+## From a Registry
 We can deploy any image from the Internet - this one happens to be an admin dashboard which from the official Docker Hub
 
 ```sh
@@ -145,8 +146,7 @@ This extends to CI as well - if a user has an existing project which is already 
 
 `popd`
 
-# Databases
-
+## Databases
 `pushd todo`
 
 Many web applications will be backed by, or eventually want to be backed by a database.

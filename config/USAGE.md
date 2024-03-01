@@ -38,31 +38,33 @@ my-website/
   index.html
 ```
 
-## Installing `tsuru`
+## Installing `impaas`
 
-Tsuru is a command-line (text-based) tool that lets you deploy your web app to Imperial's PaaS.<br>
+Next, you need install a command-line (text-based) tool that will let you deploy your web app to Imperial's PaaS.<br>
 Let's install it on your computer.
 
 To start, open the Terminal app on your computer.<br>
 You can find it by searching for "Terminal" or "Command Prompt" in the search bar.
 
-Then, paste the following command into the terminal and press `Enter`:
+Then, paste the following commands into the terminal and press `Enter`:
 ```bash
 curl -fsSL "https://tsuru.io/get" | bash
+echo "alias tsuru='impaas'" >> ~/.bashrc
+source ~/.bashrc
 ```
 
-If all went well, you should now have the `tsuru` command available in your terminal!
+If all went well, you should now have the `impaas` command available in your terminal!
 
-## Configuring `tsuru`
+## Configuring `impaas`
 
-Now we need to tell `tsuru` about Imperial's PaaS. Run the following command:
+Now we need to tell `impaas` about Imperial's PaaS. Run the following command:
 ```bash
-tsuru target add impaas https://impaas.uk -s
+impaas target add impaas https://impaas.uk -s
 ```
 
 Now you need to log in to your Imperial account, with:
 ```bash
-tsuru login
+impaas login
 ```
 This should open a web page in your browser. Log in with your Imperial username and password.<br>
 When you see "Login Successful", you can close the browser tab and return to the terminal.
@@ -78,20 +80,20 @@ cd ~/Desktop/my-website
 
 Next, let's create a new app on the PaaS, in this case called `my-app` (ignore the `static` part):
 ```bash
-tsuru app create my-app static
+impaas app create my-app static
 ```
 *Note that if someone else has already created an app with the same name, you will need to choose a different name.<br>
 You can put your Imperial username in the app name to make it unique, for example `my-app-abc123`.*
 
 Finally, deploy your app to the PaaS (don't forget the `.` at the end!):
 ```bash
-tsuru app deploy -a my-app .
+impaas app deploy -a my-app .
 ```
 This might take a few minutes to complete.
 
 Once it's done, you can check the status of your app with the following command:
 ```bash
-tsuru app info -a my-app
+impaas app info -a my-app
 ```
 
 This will give you a lot of information about your app.<br>
@@ -106,5 +108,5 @@ Created by: abc123@ic.ac.uk
 
 Open your web browser and go to the URL listed under "External Addresses" (in this case, [https://my-app.impaas.uk](https://my-app.impaas.uk)).
 
-Hopefully, you should see your web app live on the internet!<br>
+You should now see your web app live on the internet!<br>
 You can share this link with anyone and they will be able to see it too.

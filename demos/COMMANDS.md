@@ -1,5 +1,5 @@
-# Demo Commands
-## Static Blog
+# Demonstration Commands
+## Static Site
 ```sh
 pushd blog
 impaas app create blog static -t demo
@@ -7,7 +7,7 @@ impaas app deploy -a blog .
 popd
 ```
 
-## Flask App
+## Dynamic Web App
 ```sh
 pushd greet
 impaas app create greet python -t demo
@@ -15,7 +15,7 @@ impaas app deploy -a greet .
 popd
 ```
 
-## CI Deployment
+## CI Deployments
 ```sh
 pushd greet-ci
 impaas token create --id demo-ci-token -t demo
@@ -24,7 +24,8 @@ impaas token show demo-ci-token
 popd
 ```
 
-## Dockerfile
+## Container Deployments
+### Using a Dockerfile
 ```sh
 pushd counter
 impaas platform list
@@ -33,13 +34,13 @@ impaas app deploy -a counter --dockerfile .
 popd
 ```
 
-## Docker Registry
+## From a Registry
 ```sh
 impaas app create dashboard -t demo
 impaas app deploy -a dashboard -i tsuru/dashboard
 ```
 
-## Services
+## Databases
 ```sh
 pushd todo
 impaas app create todo python -t demo
@@ -51,7 +52,7 @@ impaas app deploy -a todo .
 popd
 ```
 
-## Volumes
+## File Storage
 ```sh
 pushd filemgr
 impaas app create filemgr python -t demo
