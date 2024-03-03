@@ -49,7 +49,7 @@ You can find it by searching for "Terminal" or "Command Prompt" in the search ba
 Then, paste the following commands into the terminal and press `Enter`:
 ```bash
 curl -fsSL "https://tsuru.io/get" | bash
-echo "alias tsuru='impaas'" >> ~/.bashrc
+echo "alias impaas='tsuru'" >> ~/.bashrc
 source ~/.bashrc
 ```
 
