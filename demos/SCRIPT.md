@@ -121,7 +121,7 @@ The general case is to containerise the app and deploy the image.
 Say I have a small web app written in Go, which doesn't have a respective platform available.
 
 ```sh
-impaas app create counter -t demo
+impaas app create counter static -t demo
 ```
 
 We write a Dockerfile to package our app into a container image - Impaas will pick that up and use it to build and deploy our application!
