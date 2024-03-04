@@ -29,7 +29,7 @@ popd
 ```sh
 pushd counter
 impaas platform list
-impaas app create counter -t demo
+impaas app create counter static -t demo
 impaas app deploy -a counter --dockerfile .
 popd
 ```
