@@ -109,6 +109,8 @@ kubernetes-router:
   arguments:
     - "-ingress-class"
     - "webapprouting.kubernetes.azure.com"
+    - "-k8s-annotations"
+    - "nginx.ingress.kubernetes.io/proxy-body-size=0"
 
   api:
     username: "admin"
