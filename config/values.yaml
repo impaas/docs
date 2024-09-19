@@ -16,6 +16,8 @@ tsuru-api:
   ingress:
     enabled: true
     ingressClassName: webapprouting.kubernetes.azure.com
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
     hosts:
       - host: ${YOUR_DOMAIN}
         paths:
