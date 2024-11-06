@@ -52,7 +52,7 @@ tsuru-api:
       oauth:
         clientID: "${ENTRA_CLIENT_ID}"
         clientSecret: "${ENTRA_CLIENT_SECRET}"
-        scope: "openid"
+        scope: "https://graph.microsoft.com/User.Read"
         authURL: "https://login.microsoftonline.com/${SUBSCRIPTION_ID}/oauth2/v2.0/authorize"
         tokenURL: "https://login.microsoftonline.com/${SUBSCRIPTION_ID}/oauth2/v2.0/token"
         infoURL: "https://graph.microsoft.com/v1.0/me"
@@ -86,9 +86,10 @@ tsuru-api:
     routers:
       ingress-router:
         type: api
-        api-url: http://tsuru-kubernetes-router/api/ingress-nginx
+        api-url: http://tsuru-kubernetes-router/api/ingress
         headers:
           Authorization: "Basic YWRtaW46bXlwYXNzd29yZA=="
+          X-Router-Opt: "tls-acme=true"
 
     volumePlans:
       azurefile:
@@ -111,6 +112,9 @@ kubernetes-router:
   arguments:
     - "-ingress-class"
     - "webapprouting.kubernetes.azure.com"
+    - "-use-ingress-class-name=true"
+    - "-ingress-annotations-prefix"
+    - "nginx.ingress.kubernetes.io"
     - "-k8s-annotations"
     - "nginx.ingress.kubernetes.io/proxy-body-size=0"
 
@@ -209,4 +213,7 @@ certManager:
   enabled: false
 
 registry:
+  enabled: false
+
+registryAliases:
   enabled: false
