@@ -72,14 +72,18 @@ These roles for apps, services, and volumes are used by [`impaas-manager`](https
 The deployer role is intended for use with CI/CD.
 
 ```sh
+impaas role-add user global
+impaas role-permission-add user team.create role.update.assign
+impaas role-default-add --user-create user
 impaas role-add team-member team
-impaas role-permission-add team-member app
+impaas role-permission-add team-member app team.token
 impaas role-add team-member_service team
 impaas role-permission-add team-member_service service
 impaas role-add team-member_volume team
 impaas role-permission-add team-member_volume volume
-impaas role-add deployer app
-impaas role-permission-add deployer app.deploy
+impaas role-add team-deployer team
+impaas role-permission-add team-deployer app.deploy
+impaas role-default-add --team-create team-member team-deployer
 ```
 
 ## Admins
