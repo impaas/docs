@@ -88,7 +88,7 @@ tsuru-api:
         type: api
         api-url: http://tsuru-kubernetes-router/api/ingress
         headers:
-          Authorization: "Basic YWRtaW46bXlwYXNzd29yZA=="
+          Authorization: "Basic ${ROUTER_API_AUTH_TOKEN}"
           X-Router-Opt: "tls-acme=true"
 
     volumePlans:
